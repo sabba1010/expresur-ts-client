@@ -50,7 +50,7 @@ const Quedicen: React.FC = () => {
   }
 
   return (
-    <div className="w-full bg-[#026432] py-24 overflow-hidden">
+    <div className="w-full bg-[#026432]  overflow-hidden">
       <motion.h2
         initial="hidden"
         whileInView="visible"

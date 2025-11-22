@@ -1,12 +1,11 @@
 import React from 'react';
-import { motion, } from 'framer-motion'
-import car2 from './../../assets/Grupo car2.png'
-import BgImg from '../../assets/Grupo-1567.png'
-
+import { motion } from 'framer-motion';
+import car2 from './../../assets/Grupo car2.png';
+import BgImg from '../../assets/Grupo-1567.png';
 
 const Newone = () => {
-    return (
-            <div
+  return (
+    <div
       className="w-full h-[852.87px] bg-cover bg-center flex items-center justify-center bg-[#026432]"
       style={{ backgroundImage: `url(${BgImg})` }}
     >
@@ -18,19 +17,21 @@ const Newone = () => {
         transition={{ duration: 1.1, ease: "easeOut" }}
         className="relative bg-[#F7941E] rounded-2xl shadow-2xl flex items-center px-16 py-12"
         style={{
-          width: "1567.8px",
+          width: "1650px",      // Increased so title NEVER wraps
           height: "519.61px",
           overflow: "visible"
         }}
       >
         {/* LEFT TEXT AREA */}
-        <div className="w-1/2 pr-24 space-y-8 z-10">
+        <div className="w-[60%] pr-24 space-y-8 z-10"> {/* Wider so title fits */}
+          
+          {/* TITLE ALWAYS ONE LINE */}
           <motion.h1
             initial={{ opacity: 0, x: -80 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.9, delay: 0.3 }}
-            className="text-white font-bold uppercase"
+            className="text-white font-bold uppercase whitespace-nowrap"
             style={{
               fontFamily: "Avenir Next LT Pro",
               fontSize: "80px",
@@ -116,7 +117,7 @@ const Newone = () => {
         </motion.div>
       </motion.div>
     </div>
-    );
+  );
 };
 
 export default Newone;
