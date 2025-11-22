@@ -1,5 +1,6 @@
+// src/pages/home/Nuestros.tsx
 import React from "react";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 
 // replace with correct filenames
 import iconPackage from "../../assets/icon-package.png";
@@ -7,7 +8,15 @@ import iconRemesas from "../../assets/icon-remesas.png";
 import iconPickup from "../../assets/icon-pickup.png";
 import iconConfirm from "../../assets/icon-confirm.png";
 
-const cards = [
+type IconType = any;
+
+interface Card {
+  title: string;
+  desc: string;
+  icon: IconType;
+}
+
+const cards: Card[] = [
   {
     title: "ENVÍOS\nDE PAQUETES",
     desc:
@@ -34,7 +43,7 @@ const cards = [
   },
 ];
 
-const container = {
+const container: Variants = {
   hidden: { opacity: 0, y: 10 },
   show: {
     opacity: 1,
@@ -43,7 +52,7 @@ const container = {
   },
 };
 
-const cardVariants = {
+const cardVariants: Variants = {
   hidden: { opacity: 0, y: 12, scale: 0.98 },
   show: {
     opacity: 1,
@@ -54,9 +63,9 @@ const cardVariants = {
   hover: { scale: 1.03, y: -6, transition: { type: "spring", stiffness: 400 } },
 };
 
-export default function Nuestros() {
+const Nuestros: React.FC = () => {
   return (
-    <section className="bg-white py-10 px-4 sm:px-6 lg:px-8">
+    <section className="bg-white py-10 mx-auto max-w-[1773px] px-4 sm:px-6 lg:px-8">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -96,8 +105,9 @@ export default function Nuestros() {
             whileTap={{ scale: 0.95 }}
             className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 z-10 text-white text-xl items-center justify-center w-9 h-9"
             title="Previous"
+            type="button"
           >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" />
             </svg>
           </motion.button>
@@ -135,6 +145,7 @@ export default function Nuestros() {
                 <button
                   aria-label={`favorite-${i}`}
                   className="absolute top-3 right-3 text-amber-400"
+                  type="button"
                 >
                   ♡
                 </button>
@@ -145,7 +156,11 @@ export default function Nuestros() {
                     className="w-[70%] sm:w-40 md:w-44 lg:w-48 aspect-[3/2] flex items-center justify-center"
                   >
                     <img
-                      src={card.icon}
+                      src={
+                        typeof card.icon === "string"
+                          ? card.icon
+                          : (card.icon as any).src ?? card.icon
+                      }
                       alt={card.title.replace("\n", " ")}
                       className="object-contain w-full h-full"
                       loading="lazy"
@@ -177,6 +192,7 @@ export default function Nuestros() {
                       bg-amber-500 text-green-900
                       shadow-md hover:scale-105 transition-transform
                     "
+                    type="button"
                   >
                     VER MÁS
                   </motion.button>
@@ -190,8 +206,9 @@ export default function Nuestros() {
             whileTap={{ scale: 0.95 }}
             className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 z-10 text-white text-xl items-center justify-center w-9 h-9"
             title="Next"
+            type="button"
           >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" />
             </svg>
           </motion.button>
@@ -201,4 +218,6 @@ export default function Nuestros() {
       </motion.div>
     </section>
   );
-}
+};
+
+export default Nuestros;

@@ -1,9 +1,9 @@
 import React from "react";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import HeroImg from "../../assets/Hero1.png";
 import HeroImg2 from "../../assets/Hero2.png";
 
-const containerVariants = {
+const containerVariants: Variants = {
   hidden: {},
   show: {
     transition: {
@@ -13,29 +13,29 @@ const containerVariants = {
   },
 };
 
-const textVariant = {
+const textVariant: Variants = {
   hidden: { opacity: 0, x: -30 },
   show: { opacity: 1, x: 0, transition: { duration: 0.6, ease: "easeOut" } },
 };
 
-const btnVariant = {
+const btnVariant: Variants = {
   hover: { scale: 1.03, boxShadow: "0 10px 30px rgba(0,0,0,0.15)" },
   tap: { scale: 0.98 },
 };
 
-const imageVariant = {
+const imageVariant: Variants = {
   hidden: { opacity: 0, y: 30, scale: 0.98 },
   show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.8, ease: "circOut" } },
 };
 
-const floatAnim = {
+const floatAnim: Variants = {
   animate: {
     y: [0, -8, 0],
     transition: { duration: 6, repeat: Infinity, ease: "easeInOut" },
   },
 };
 
-const HeroOne = () => {
+const HeroOne: React.FC = () => {
   return (
     <section className="w-full bg-gradient-to-b from-[#005f37] to-[#a8cfc0] lg:h-[873px] py-20 overflow-hidden">
       {/* wrapper caps display at 1920px and hides overflow */}
@@ -61,7 +61,8 @@ const HeroOne = () => {
               variants={textVariant}
               className="max-w-xl text-sm md:text-base text-green-100"
             >
-              Soluciones logísticas integrales — transporte, almacenamiento y distribución con tecnología para que tu operación fluya.
+              Soluciones logísticas integrales — transporte, almacenamiento y distribución con
+              tecnología para que tu operación fluya.
             </motion.p>
 
             <motion.div variants={textVariant}>
@@ -69,6 +70,7 @@ const HeroOne = () => {
                 variants={btnVariant}
                 whileHover="hover"
                 whileTap="tap"
+                type="button"
                 className="inline-flex items-center gap-3 px-6 py-3 bg-white text-green-900 rounded-full font-semibold shadow-lg hover:opacity-95 transition"
               >
                 SOLICITAR COTIZACIÓN
@@ -82,26 +84,28 @@ const HeroOne = () => {
             variants={imageVariant}
             initial="hidden"
             animate="show"
-            aria-hidden="true"
+            aria-hidden={true}
           >
             {/* Background HeroImg2 — same large width classes as before */}
             <motion.img
-              src={HeroImg2}
+              src={(HeroImg2 as any).src ?? (HeroImg2 as any)}
               alt="Logistics illustration large"
               className="
                 hidden sm:block max-w-none object-cover z-0
                 w-[700px] sm:w-[1100px] md:w-[1400px] lg:w-[1700px] xl:w-[2100px] 2xl:w-[2400px]
                 mr-[-160px] md:mr-[-380px] lg:mr-[-600px]
               "
-              {...floatAnim}
+              variants={floatAnim}
+              initial="animate"
+              animate="animate"
             />
 
-            {/* Foreground HeroImg — same large widths */}
+            {/* Foreground HeroImg — added specific class 'hero-foreground' */}
             <motion.img
-              src={HeroImg}
+              src={(HeroImg as any).src ?? (HeroImg as any)}
               alt="Logistics detail"
               className={
-                "absolute z-30 object-cover rounded-lg " +
+                "hero-foreground absolute z-30 object-cover rounded-lg " +
                 "w-[320px] sm:w-[480px] md:w-[700px] lg:w-[1000px] xl:w-[1300px] 2xl:w-[1500px] " +
                 "left-1/2 transform -translate-x-1/2 sm:left-auto sm:translate-x-0 " +
                 "sm:right-6 md:right-[-60px] lg:right-[-180px] " +
@@ -114,15 +118,6 @@ const HeroOne = () => {
           </motion.div>
         </div>
       </div>
-
-      {/* Small-screen adjustment */}
-      <style jsx>{`
-        @media (max-width: 420px) {
-          .absolute {
-            bottom: -60px !important;
-          }
-        }
-      `}</style>
     </section>
   );
 };
