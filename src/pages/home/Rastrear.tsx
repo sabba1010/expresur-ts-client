@@ -15,7 +15,7 @@ const Rastrear = () => {
       >
         {/* LEFT CONTENT */}
         <div className="order-2 lg:order-1 flex flex-col justify-start">
-          <h1 className="text-5xl lg:text-6xl xl:text-7xl font-bold text-orange-500 leading-tight">
+          <h1 className="text-5xl lg:text-6xl xl:text-7xl font-semibold text-orange-500 leading-tight">
             Rastrear <br /> paquete
           </h1>
 
