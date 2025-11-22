@@ -7,19 +7,6 @@ const Footer: React.FC = () => {
   return (
     <footer className="bg-[#292929] text-white">
       {/* Top Orange Line with Dots */}
-      <div className="bg-[#046838] py-4 relative overflow-hidden">
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="w-full h-px bg-[#FA921D]"></div>
-        </div>
-        <div className="relative flex justify-center gap-16 md:gap-32 lg:gap-48">
-          {[1, 2, 3, 4, 5].map((i) => (
-            <div
-              key={i}
-              className="w-8 h-8 bg-[#FA921D] rounded-full border-4 border-[#046838] shadow-lg"
-            />
-          ))}
-        </div>
-      </div>
 
       {/* Main Footer Content */}
       <div className="max-w-7xl mx-auto px-6 py-12">
