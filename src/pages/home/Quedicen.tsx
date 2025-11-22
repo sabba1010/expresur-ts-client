@@ -40,15 +40,6 @@ const Quedicen: React.FC = () => {
     visible: { opacity: 1, x: 0, transition: { duration: 1, ease: "easeOut" } }
   }
 
-  const cardVariants: Variants = {
-    hidden: { opacity: 0, y: 80 },
-    visible: (i: number) => ({
-      opacity: 1,
-      y: 0,
-      transition: { delay: i * 0.2 + 0.4, duration: 0.9, ease: "easeOut" }
-    })
-  }
-
   return (
     <div className="w-full bg-[#026432] overflow-hidden">
 
@@ -83,92 +74,53 @@ const Quedicen: React.FC = () => {
         </motion.button>
 
         {/* CARD LIST */}
-        <div
-          className="
-            flex justify-center items-start gap-10 w-full max-w-7xl
-            md:flex-row
-            flex-col
-          "
-        >
-          {testimonials
-            .slice(startIndex, startIndex + visibleCount)
-            .map((item, index) => (
-              <motion.div
-                key={startIndex + index}
-                custom={index}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-100px" }}
-                variants={cardVariants}
-                whileHover={{ y: -20, transition: { duration: 0.4, ease: "easeOut" } }}
-                className="flex flex-col items-start mx-auto"
+        <div className="flex justify-center items-start gap-10 w-full max-w-7xl md:flex-row flex-col">
+          
+          {testimonials.slice(startIndex, startIndex + visibleCount).map((item, index) => (
+            <div key={index} className="flex flex-col items-start mx-auto">
+
+              {/* CARD */}
+              <div
+                className="
+                  w-[456px] h-[385px]
+                  pt-[48px] px-[48px] pb-10
+                  flex flex-col justify-start
+                  md:w-[456px] w-[90%]
+                "
+                style={{
+                  backgroundImage: `url(${card})`,
+                  backgroundSize: "100% 100%",
+                  backgroundRepeat: "no-repeat"
+                }}
               >
+                <p className="text-[18px] leading-[28px] text-black text-left">
+                  {item.text}
+                </p>
 
-                {/* CARD */}
-                <div
-                  className="
-                    w-[456px] h-[385px] 
-                    pt-[48px] px-[48px] pb-10 
-                    flex flex-col justify-start
-                    transition-all duration-500
-                    md:w-[456px]
-                    w-[90%]
-                  "
-                  style={{
-                    backgroundImage: `url(${card})`,
-                    backgroundSize: "100% 100%",
-                    backgroundRepeat: "no-repeat"
-                  }}
-                >
-                  <motion.p
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    transition={{ delay: index * 0.2 + 0.8, duration: 0.8 }}
-                    className="text-[18px] leading-[28px] text-black text-left"
-                  >
-                    {item.text}
-                  </motion.p>
+                <div className="flex text-yellow-500 text-xl mt-4">
+                  ★★★★★
+                </div>
+              </div>
 
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    transition={{ delay: index * 0.2 + 1, duration: 0.6 }}
-                    className="flex text-yellow-500 text-xl mt-4"
-                  >
-                    ★★★★★
-                  </motion.div>
+              {/* AVATAR + INFO */}
+              <div className="flex items-center gap-4 mt-6 w-[456px] md:w-[456px] w-[90%]">
+                
+                <img
+                  src={item.avatar}
+                  alt="avatar"
+                  className="w-[90px] h-[90px] rounded-full object-cover border border-[#707070] shadow-lg flex-shrink-0"
+                />
+
+                <div className="flex flex-col items-start">
+                  <h3 className="text-white text-lg font-semibold">{item.name}</h3>
+                  <p className="text-gray-300 text-sm">{item.role}</p>
                 </div>
 
-                {/* AVATAR + INFO - LEFT ALIGNED ON MOBILE */}
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.2 + 1.1, duration: 0.7 }}
-                  className="
-                    flex items-center gap-4 
-                    mt-6 
-                    w-[456px]
-                    md:w-[456px]
-                    w-[90%]
-                  "
-                >
-                  <motion.img
-                    whileHover={{ scale: 1.1, rotate: 5 }}
-                    src={item.avatar}
-                    alt="avatar"
-                    className="
-                      w-[90px] h-[90px] rounded-full object-cover 
-                      border border-[#707070] shadow-lg flex-shrink-0
-                    "
-                  />
+              </div>
 
-                  <div className="flex flex-col items-start">
-                    <h3 className="text-white text-lg font-semibold">{item.name}</h3>
-                    <p className="text-gray-300 text-sm">{item.role}</p>
-                  </div>
-                </motion.div>
-              </motion.div>
-            ))}
+            </div>
+          ))}
+
         </div>
 
         {/* RIGHT ARROW — HIDDEN ON MOBILE */}
@@ -180,6 +132,7 @@ const Quedicen: React.FC = () => {
         >
           ❯
         </motion.button>
+
       </div>
     </div>
   )
