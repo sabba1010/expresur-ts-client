@@ -130,8 +130,7 @@ const Nuestros: React.FC = () => {
   useEffect(() => {
     const start = () => {
       stop();
-      // do not start autoplay in grid mode
-      if (isGridRef.current) return;
+      // ALWAYS allow autoplay regardless of grid/visible count
       autoplayRef.current = window.setInterval(() => {
         if (!isPausedRef.current) setIndex((i) => (i + 1) % total);
       }, 4000);
@@ -144,6 +143,7 @@ const Nuestros: React.FC = () => {
     };
     start();
     return () => stop();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [total, isGrid]);
 
   // ---------- keyboard navigation ----------
@@ -215,7 +215,7 @@ const Nuestros: React.FC = () => {
 
   return (
     <section className="bg-white py-8 mx-auto max-w-[1773px] px-4 sm:px-6 lg:px-8 mt-5">
-      <div className="relative mx-auto w-full max-w-[1200px] md:max-w-[1400px] rounded-[28px] sm:rounded-[36px] lg:rounded-[43px] shadow-[3px_3px_6px_0_rgba(0,0,0,0.16)] bg-[rgba(4,104,56,1)] text-white p-6 sm:p-10 md:p-12 lg:p-16 overflow-visible -mt-[10%]">
+      <div className="relative mx-auto w-full max-w-[1200px] md:max-w-[1400px] rounded-[28px] sm:rounded-[36px] lg:rounded-[43px] shadow-[3px_3px_6px_0_rgba(0,0,0,0.16)] bg-[rgba(4,104,56,1)] text-white p-6 sm:p-10 md:p-12 lg:p-16 overflow-visible -mt-[10%] z-10">
         <h2 className="z-50 text-center text-4xl sm:text-5xl font-semibold mb-6 sm:mb-8 tracking-wide ">
           Nuestros servicios
         </h2>

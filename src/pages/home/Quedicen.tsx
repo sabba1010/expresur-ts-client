@@ -171,7 +171,7 @@ const Quedicen: React.FC = () => {
         <button
           onClick={prev}
           aria-label="Previous testimonials"
-          className="absolute top-1/2 -translate-y-1/2 left-6 md:left-12 lg:left-16 
+          className="absolute top-1/2 -translate-y-1/2 left-6 md:left-12 lg:left-52
           text-orange-400 text-4xl cursor-pointer z-20 hidden md:flex items-center justify-center
           w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/5 hover:bg-white/10 transition-all"
           style={{ backdropFilter: "blur(2px)" }}
@@ -255,7 +255,7 @@ const Quedicen: React.FC = () => {
         <button
           onClick={next}
           aria-label="Next testimonials"
-          className="absolute top-1/2 -translate-y-1/2 right-6 md:right-12 lg:right-16 
+          className="absolute top-1/2 -translate-y-1/2 right-6 md:right-12 lg:right-52 
           text-orange-400 text-4xl cursor-pointer z-20 hidden md:flex items-center justify-center
           w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/5 hover:bg-white/10 transition-all"
           style={{ backdropFilter: "blur(2px)" }}
