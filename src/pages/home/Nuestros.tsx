@@ -1,5 +1,5 @@
 // src/pages/home/Nuestros.tsx
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import iconPackage from "../../assets/icon-package.png";
 import iconRemesas from "../../assets/icon-remesas.png";
@@ -49,13 +49,29 @@ const Nuestros: React.FC = () => {
     if (w < 480) return 1; // small phones
     if (w < 768) return 1; // phones
     if (w < 1024) return 2; // tablets
-    if (w < 1280) return 3; // small desktop
+    if (w < 1280) return 3; // small desktop / large tablet
     return 4; // large desktop
   };
 
+  // visibleCount still used for slide width when in carousel mode
   const [visibleCount, setVisibleCount] = useState<number>(getVisibleCount());
+
+  // Add explicit grid mode boolean: treat >=1024px as "desktop grid" (per request)
+  const getIsGrid = () => {
+    if (typeof window === "undefined") return false;
+    return window.innerWidth >= 1024;
+  };
+  const [isGrid, setIsGrid] = useState<boolean>(getIsGrid());
+  const isGridRef = useRef(isGrid);
   useEffect(() => {
-    const onResize = () => setVisibleCount(getVisibleCount());
+    isGridRef.current = isGrid;
+  }, [isGrid]);
+
+  useEffect(() => {
+    const onResize = () => {
+      setVisibleCount(getVisibleCount());
+      setIsGrid(getIsGrid());
+    };
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
   }, []);
@@ -92,13 +108,15 @@ const Nuestros: React.FC = () => {
     // clamp index
     const idx = Math.max(0, Math.min(total - 1, index));
     setIndex(idx);
-    // center when visibleCount === 1 (mobile)
-    // otherwise, scroll so that the first visible item is at left (nice effect)
     if (!viewportRef.current) return;
+
+    // if in grid mode, no scrolling needed
+    if (isGrid) return;
+
     if (visibleCount === 1) {
       scrollToIndex(idx, true);
     } else {
-      // calculate left such that the first visible is aligned left
+      // calculate left such that the first visible item is at left
       const vp = viewportRef.current;
       const slide = slideRefs.current[idx];
       if (!slide) return;
@@ -106,12 +124,14 @@ const Nuestros: React.FC = () => {
       vp.scrollTo({ left, behavior: "smooth" });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [index, visibleCount]);
+  }, [index, visibleCount, isGrid]);
 
   // ---------- autoplay ----------
   useEffect(() => {
     const start = () => {
       stop();
+      // do not start autoplay in grid mode
+      if (isGridRef.current) return;
       autoplayRef.current = window.setInterval(() => {
         if (!isPausedRef.current) setIndex((i) => (i + 1) % total);
       }, 4000);
@@ -124,7 +144,7 @@ const Nuestros: React.FC = () => {
     };
     start();
     return () => stop();
-  }, [total]);
+  }, [total, isGrid]);
 
   // ---------- keyboard navigation ----------
   useEffect(() => {
@@ -144,12 +164,10 @@ const Nuestros: React.FC = () => {
   // ---------- update index on manual scroll (so dots / state stay in sync) ----------
   useEffect(() => {
     const vp = viewportRef.current;
-    if (!vp) return;
+    if (!vp || isGrid) return;
 
     let raf = 0;
     const onScroll = () => {
-      // Avoid updating while programmatic scroll uses smooth behavior (still okay)
-      // We'll compute the slide which is most centered in viewport
       cancelAnimationFrame(raf);
       raf = requestAnimationFrame(() => {
         const vpCenter = vp.scrollLeft + vp.clientWidth / 2;
@@ -165,7 +183,6 @@ const Nuestros: React.FC = () => {
           }
         });
         if (nearest !== index) {
-          // Update index but don't trigger another programmatic scroll (we rely on user)
           setIndex(nearest);
         }
       });
@@ -177,7 +194,7 @@ const Nuestros: React.FC = () => {
       cancelAnimationFrame(raf);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [visibleCount]);
+  }, [visibleCount, isGrid]);
 
   // ---------- pointer / focus handlers to pause autoplay ----------
   const handlePointerEnter = () => (isPausedRef.current = true);
@@ -194,8 +211,6 @@ const Nuestros: React.FC = () => {
     } w-12 h-12`;
 
   // ---------- compute slide width percent (each slide width relative to viewport) ----------
-  // If visibleCount = 1 -> each slide = 100% viewport width
-  // If visibleCount = 2 -> each slide = 50%, etc.
   const slideWidthPercent = 100 / visibleCount;
 
   return (
@@ -212,7 +227,7 @@ const Nuestros: React.FC = () => {
           onFocus={handleFocusIn}
           onBlur={handleFocusOut}
         >
-          {/* Prev */}
+          {/* Prev — now shown on desktop (grid) too; still hidden on small screens due to `hidden md:flex` */}
           <button
             aria-label="Previous"
             onClick={prev}
@@ -224,25 +239,25 @@ const Nuestros: React.FC = () => {
             </svg>
           </button>
 
-          {/* VIEWPORT — use scroll-snap for centering on mobile */}
+          {/* VIEWPORT — carousel only when not grid */}
           <div
             ref={viewportRef}
-            className="w-full overflow-x-auto no-scrollbar"
+            className={`w-full ${isGrid ? "" : "overflow-x-auto no-scrollbar"}`}
             tabIndex={0}
             role="region"
             aria-roledescription="carousel"
             aria-label="Nuestros servicios carousel"
             style={{
               WebkitOverflowScrolling: "touch",
-              scrollSnapType: "x mandatory",
-              // hide native scrollbars via CSS utility 'no-scrollbar' (ensure you have it or add)
+              scrollSnapType: isGrid ? undefined : "x mandatory",
             }}
           >
             <div
-              className="flex items-start gap-4"
+              className={`
+                ${isGrid ? "grid grid-cols-4 gap-6 items-stretch" : "flex items-start gap-4"}
+              `}
               style={{
-                // width is implicitly controlled by children; but set minWidth to ensure each slide size
-                // We'll set each slide's flexBasis to `slideWidthPercent%` so that for visibleCount=1 it's full-width.
+                // In grid mode children control width via grid; in carousel we use flex & slideWidthPercent
               }}
             >
               {cards.map((card, i) => {
@@ -254,12 +269,22 @@ const Nuestros: React.FC = () => {
                     key={i}
                     ref={pushSlideRef}
                     className="relative flex flex-col justify-between rounded-xl border-2 border-amber-500 p-4 sm:p-6 bg-white/8 backdrop-blur-md shadow-md min-h-[240px] sm:min-h-[260px] flex-shrink-0"
-                    style={{
-                      flex: `0 0 ${slideWidthPercent}%`,
-                      maxWidth: `${slideWidthPercent}%`,
-                      scrollSnapAlign: visibleCount === 1 ? "center" : "start",
-                      transition: "transform 280ms ease, box-shadow 280ms ease",
-                    }}
+                    style={
+                      isGrid
+                        ? {
+                            // grid: take full card space
+                            width: "100%",
+                            maxWidth: "100%",
+                            scrollSnapAlign: "start",
+                            transition: "transform 280ms ease, box-shadow 280ms ease",
+                          }
+                        : {
+                            flex: `0 0 ${slideWidthPercent}%`,
+                            maxWidth: `${slideWidthPercent}%`,
+                            scrollSnapAlign: visibleCount === 1 ? "center" : "start",
+                            transition: "transform 280ms ease, box-shadow 280ms ease",
+                          }
+                    }
                     role="group"
                     aria-roledescription="slide"
                     aria-label={`Slide ${i + 1} of ${total}`}
@@ -271,7 +296,11 @@ const Nuestros: React.FC = () => {
 
                     <div className="flex justify-center mb-3">
                       <div className="w-[70%] sm:w-40 md:w-44 lg:w-48 aspect-[4/3] flex items-center justify-center">
-                        <img src={imgSrc} alt={card.title.replace(/\n/g, " ")} className="object-contain w-full h-full drop-shadow-md" />
+                        <img
+                          src={imgSrc}
+                          alt={card.title.replace(/\n/g, " ")}
+                          className="object-contain w-full h-full drop-shadow-md"
+                        />
                       </div>
                     </div>
 
@@ -295,7 +324,7 @@ const Nuestros: React.FC = () => {
             </div>
           </div>
 
-          {/* Next */}
+          {/* Next — now shown on desktop (grid) too; still hidden on small screens due to `hidden md:flex` */}
           <button
             aria-label="Next"
             onClick={next}
@@ -308,18 +337,20 @@ const Nuestros: React.FC = () => {
           </button>
         </div>
 
-        {/* Dots (mobile only) */}
-        <div className="mt-6 flex justify-center gap-2 md:hidden" role="tablist" aria-label="Seleccionar slide">
-          {cards.map((_, i) => (
-            <button
-              key={`dot-${i}`}
-              onClick={() => goTo(i)}
-              className={`w-3 h-3 rounded-full transition-transform duration-200 ${i === index ? "bg-amber-400 scale-125" : "bg-white/30"}`}
-              aria-label={`Ir al slide ${i + 1}`}
-              aria-current={i === index}
-            />
-          ))}
-        </div>
+        {/* Dots (mobile only) — hide in grid mode */}
+        {!isGrid && (
+          <div className="mt-6 flex justify-center gap-2 md:hidden" role="tablist" aria-label="Seleccionar slide">
+            {cards.map((_, i) => (
+              <button
+                key={`dot-${i}`}
+                onClick={() => goTo(i)}
+                className={`w-3 h-3 rounded-full transition-transform duration-200 ${i === index ? "bg-amber-400 scale-125" : "bg-white/30"}`}
+                aria-label={`Ir al slide ${i + 1}`}
+                aria-current={i === index}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );
