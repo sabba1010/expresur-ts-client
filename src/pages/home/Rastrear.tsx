@@ -1,43 +1,61 @@
 import React from "react";
+import { motion } from "framer-motion";
 import rastrearImg from "../../assets/rastrear.png";
 
 const Rastrear = () => {
   return (
-    <div className="w-full max-w-[1673px] mx-auto">
-      <section
+    <div className="w-full max-w-[1673px] xl:max-w-[1673px] mx-auto">
+      <motion.section
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1, ease: "easeOut" }}
+        viewport={{ once: true, amount: 0.2 }}
         className="
           w-full
-          px-6 sm:px-8 md:px-12 lg:px-20
-          py-12 lg:py-20
+          px-6 sm:px-8 md:px-12 xl:px-20
+          mt-12 xl:mt-28
+          py-6 xl:py-12
           grid grid-cols-1 md:grid-cols-2
-          gap-8 md:gap-12 lg:gap-20
-          items-center
+          gap-6 md:gap-12 xl:gap-20
+          items-start
         "
       >
         {/* LEFT CONTENT */}
-        <div className="order-2 md:order-1 flex flex-col justify-start">
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-semibold text-orange-500 leading-tight">
+        <motion.div
+          initial={{ opacity: 0, x: -40 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.9, delay: 0.2 }}
+          viewport={{ once: true }}
+          className="order-2 md:order-1 flex flex-col justify-start -mt-2 xl:-mt-10"
+        >
+          <h1 className="text-3xl sm:text-4xl md:text-5xl xl:text-6xl xl:text-7xl font-semibold text-orange-500 leading-tight">
             Rastrear paquete
           </h1>
 
-          {/* TEXT WITH CLEAN GAPS */}
-          <div className="mt-5 space-y-4 max-w-md">
-            <p className="text-gray-600 text-sm sm:text-base lg:text-lg leading-relaxed">
-              rápidos, económicos y seguros Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+          <div className="mt-5 space-y-4 max-w-full sm:max-w-md xl:max-w-md">
+            <p className="text-gray-600 text-sm sm:text-base xl:text-lg leading-relaxed">
+              rápidos, económicos y seguros Lorem ipsum dolor sit amet,
+              consectetur adipiscing elit, sed diam nonummy nibh euismod
+              tincidunt ut laoreet dolore magna aliquam erat volutpat.
             </p>
 
-            <p className="text-gray-600 text-sm sm:text-base lg:text-lg leading-relaxed">
-              Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
+            <p className="text-gray-600 text-sm sm:text-base xl:text-lg leading-relaxed">
+              Ut wisi enim ad minim veniam, quis nostrud exerci tation
+              ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo
+              consequat.
             </p>
 
-            <p className="text-gray-600 text-sm sm:text-base lg:text-lg leading-relaxed">
-              Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim.
+            <p className="text-gray-600 text-sm sm:text-base xl:text-lg leading-relaxed">
+              Duis autem vel eum iriure dolor in hendrerit in vulputate velit
+              esse molestie consequat, vel illum dolore eu feugiat nulla
+              facilisis at vero eros et accumsan et iusto odio dignissim.
             </p>
           </div>
 
-          {/* INPUT + BUTTON */}
-          <form className="mt-8 flex flex-col sm:flex-col lg:flex-row gap-4 lg:gap-6 items-stretch sm:items-start">
-            <label htmlFor="tracking" className="sr-only">Número de rastreo</label>
+          <form className="mt-6 flex flex-col sm:flex-row gap-4 xl:gap-6 items-stretch sm:items-center">
+            <label htmlFor="tracking" className="sr-only">
+              Número de rastreo
+            </label>
             <input
               id="tracking"
               type="text"
@@ -50,14 +68,14 @@ const Rastrear = () => {
                 focus:outline-none focus:ring-2 focus:ring-orange-400
                 transition-all duration-200
                 text-sm sm:text-base
-                lg:w-[420px]
+                xl:w-[420px]
               "
             />
 
             <button
               type="submit"
               className="
-                w-full lg:w-auto
+                w-full sm:w-auto
                 px-8 py-3
                 bg-green-600 text-white
                 font-bold rounded-lg
@@ -70,26 +88,35 @@ const Rastrear = () => {
               RASTREAR
             </button>
           </form>
-        </div>
+        </motion.div>
 
-        {/* RIGHT IMAGE (responsive sizes) */}
-        <div className="order-1 md:order-2 flex justify-center md:justify-end">
+        {/* RIGHT IMAGE */}
+        <motion.div
+          initial={{ opacity: 0, x: 40 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1, delay: 0.3 }}
+          viewport={{ once: true }}
+          className="order-1 md:order-2 flex justify-center md:justify-end"
+        >
           <img
             src={rastrearImg}
             alt="Rastrear paquete"
             loading="lazy"
             className="
-              w-full max-w-[400px]             /* mobile */
-              sm:max-w-[520px]                 /* small tablets */
-              md:max-w-[700px]                /* tablets / small laptops */
-              lg:max-w-[1350px] lg:w-[1350px] /* DESKTOP: EXACTLY THE SAME */
+              w-full
+              max-w-[320px]
+              sm:max-w-[420px]
+              md:max-w-[600px]
+              xl:max-w-[1200px] xl:w-[1200px]
               h-auto
               object-contain drop-shadow-2xl
-              ml-0 md:ml-6 lg:ml-10
+              ml-0 md:ml-0 xl:ml-10
+              xl:-mr-[15%]
+              xl:-mt-[10%]
             "
           />
-        </div>
-      </section>
+        </motion.div>
+      </motion.section>
     </div>
   );
 };

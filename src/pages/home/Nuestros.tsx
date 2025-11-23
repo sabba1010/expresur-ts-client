@@ -42,161 +42,87 @@ const cards: Card[] = [
   },
 ];
 
-const container: Variants = {
-  hidden: { opacity: 0, y: 10 },
+const containerVariants: Variants = {
+  hidden: { opacity: 0, y: 30 },
   show: {
     opacity: 1,
     y: 0,
-    transition: { staggerChildren: 0.12, when: "beforeChildren" },
+    transition: { staggerChildren: 0.1, when: "beforeChildren", duration: 0.8 },
   },
 };
 
 const cardVariants: Variants = {
-  hidden: { opacity: 0, y: 12, scale: 0.98 },
+  hidden: { opacity: 0, y: 30, scale: 0.97 },
   show: {
     opacity: 1,
     y: 0,
     scale: 1,
-    transition: { type: "spring", stiffness: 280, damping: 18 },
+    transition: { type: "spring", stiffness: 200, damping: 22 },
   },
 };
 
 const Nuestros: React.FC = () => {
-  const trackRef = useRef<HTMLDivElement | null>(null);
-  const itemRefs = useRef<Array<HTMLDivElement | null>>([]);
-  const [isTouchDevice, setIsTouchDevice] = useState<boolean>(false);
-  const [canScrollPrev, setCanScrollPrev] = useState(false);
-  const [canScrollNext, setCanScrollNext] = useState(false);
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [pages, setPages] = useState(1);
+  const getVisibleCount = () => {
+    if (typeof window === "undefined") return 4;
+    const w = window.innerWidth;
+    if (w < 640) return 1;
+    if (w < 1024) return 2;
+    if (w < 1280) return 3;
+    return 4;
+  };
 
-  // detect mobile (<768px)
+  const [visibleCount, setVisibleCount] = useState<number>(getVisibleCount());
   useEffect(() => {
-    const check = () => {
-      const isTouch = window.innerWidth < 768;
-      setIsTouchDevice(isTouch);
-      updateScrollButtons();
-      computePages();
-    };
-    check();
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
+    const onResize = () => setVisibleCount(getVisibleCount());
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
   }, []);
 
-  const computePages = () => {
-    const el = trackRef.current;
-    if (!el) return;
+  const loopList = [...cards, ...cards];
+  const total = cards.length;
 
-    if (window.innerWidth < 768) {
-      setPages(cards.length);
-    } else {
-      const clientWidth = el.clientWidth;
-      const item = itemRefs.current[0];
-      if (!item) {
-        setPages(1);
-        return;
-      }
-      const itemW = item.getBoundingClientRect().width + 16;
-      const perRow = Math.max(1, Math.floor(clientWidth / itemW));
-      setPages(Math.ceil(cards.length / perRow));
-    }
-  };
+  const [index, setIndex] = useState<number>(0);
+  const next = () => setIndex((i) => (i + 1) % total);
+  const prev = () => setIndex((i) => (i - 1 + total) % total);
+  const goTo = (i: number) => setIndex(() => Math.max(0, Math.min(total - 1, i)));
 
-  const updateScrollButtons = () => {
-    const el = trackRef.current;
-    if (!el) return;
-    const { scrollLeft, scrollWidth, clientWidth } = el;
-    setCanScrollPrev(scrollLeft > 8);
-    setCanScrollNext(scrollLeft + clientWidth + 8 < scrollWidth);
-  };
-
-  const scrollToIndex = (index: number, smooth = true) => {
-    const el = trackRef.current;
-    const item = itemRefs.current[index];
-    if (!el || !item) return;
-
-    const itemRect = item.getBoundingClientRect();
-    const offset =
-      item.offsetLeft - el.clientWidth / 2 + itemRect.width / 2;
-
-    el.scrollTo({ left: offset, behavior: smooth ? "smooth" : "auto" });
-
-    setTimeout(() => {
-      updateActiveByCenter();
-      updateScrollButtons();
-    }, smooth ? 300 : 0);
-  };
-
-  const scrollByPage = (direction: "next" | "prev") => {
-    const el = trackRef.current;
-    if (!el) return;
-
-    const { clientWidth, scrollLeft, scrollWidth } = el;
-    const page = clientWidth * 0.9;
-
-    let target =
-      direction === "next" ? scrollLeft + page : scrollLeft - page;
-
-    target = Math.max(0, Math.min(target, scrollWidth - clientWidth));
-
-    el.scrollTo({ left: target, behavior: "smooth" });
-
-    setTimeout(() => {
-      updateActiveByCenter();
-      updateScrollButtons();
-    }, 350);
-  };
-
-  const updateActiveByCenter = () => {
-    const el = trackRef.current;
-    if (!el) return;
-
-    const center = el.scrollLeft + el.clientWidth / 2;
-
-    let closest = 0;
-    let closestDiff = Infinity;
-
-    itemRefs.current.forEach((item, index) => {
-      if (!item) return;
-      const left = item.offsetLeft;
-      const width = item.getBoundingClientRect().width;
-      const itemCenter = left + width / 2;
-      const diff = Math.abs(center - itemCenter);
-      if (diff < closestDiff) {
-        closestDiff = diff;
-        closest = index;
-      }
-    });
-
-    setActiveIndex(closest);
-  };
+  const autoplayRef = useRef<number | null>(null);
+  const isPausedRef = useRef(false);
 
   useEffect(() => {
-    const el = trackRef.current;
-    if (!el) return;
-
-    let raf = 0;
-    const onScroll = () => {
-      if (raf) cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => {
-        updateActiveByCenter();
-        updateScrollButtons();
-      });
+    const start = () => {
+      stop();
+      autoplayRef.current = window.setInterval(() => {
+        if (!isPausedRef.current) setIndex((i) => (i + 1) % total);
+      }, 4000);
     };
-
-    el.addEventListener("scroll", onScroll);
-    updateActiveByCenter();
-    updateScrollButtons();
-
-    return () => {
-      el.removeEventListener("scroll", onScroll);
-      if (raf) cancelAnimationFrame(raf);
+    const stop = () => {
+      if (autoplayRef.current !== null) {
+        clearInterval(autoplayRef.current);
+        autoplayRef.current = null;
+      }
     };
+    start();
+    return () => stop();
+  }, [total]);
+
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "ArrowRight") next();
+      if (e.key === "ArrowLeft") prev();
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
   }, []);
 
-  const setItemRef = (el: HTMLDivElement | null, idx: number) => {
-    itemRefs.current[idx] = el;
-  };
+  const slideWidthPercent = 100 / visibleCount;
+  const containerWidthPercent = (loopList.length / visibleCount) * 100;
+  const translateXPercent = -(index * slideWidthPercent);
+
+  const handleMouseEnter = () => (isPausedRef.current = true);
+  const handleMouseLeave = () => (isPausedRef.current = false);
+  const handleFocusIn = () => (isPausedRef.current = true);
+  const handleFocusOut = () => (isPausedRef.current = false);
 
   const btnClass = (disabled: boolean) =>
     `inline-flex items-center justify-center rounded-full shadow-lg transition ${
@@ -207,98 +133,64 @@ const Nuestros: React.FC = () => {
 
   return (
     <section className="bg-white py-10 mx-auto max-w-[1773px] px-4 sm:px-6 lg:px-8 mt-5">
+      
+      {/* 🔥 Scroll Animation Wrapper Added */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="
-          relative mx-auto w-full max-w-[1200px] md:max-w-[1400px]
-          rounded-[28px] sm:rounded-[36px] lg:rounded-[43px]
-          shadow-[3px_3px_6px_0_rgba(0,0,0,0.16)]
-          bg-[rgba(4,104,56,1)] text-white
-          p-8 sm:p-10 md:p-12 lg:p-16
-          overflow-hidden -mt-[10%]
-        "
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, amount: 0.2 }}
+        variants={containerVariants}
+        className="relative mx-auto w-full max-w-[1200px] md:max-w-[1400px] rounded-[28px] sm:rounded-[36px] lg:rounded-[43px] shadow-[3px_3px_6px_0_rgba(0,0,0,0.16)] bg-[rgba(4,104,56,1)] text-white p-8 sm:p-10 md:p-12 lg:p-16 overflow-hidden -mt-[10%]"
       >
-        <h2 className="text-center text-5xl font-semibold mb-8 tracking-wide ">
+        <h2 className="z-50 text-center text-5xl font-semibold mb-8 tracking-wide ">
           Nuestros servicios
         </h2>
 
-        <div className="relative">
-          {/* Previous Button — hidden on mobile */}
+        <div
+          className="relative"
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          onFocus={handleFocusIn}
+          onBlur={handleFocusOut}
+        >
+          {/* Prev */}
           <button
             aria-label="Previous"
-            onClick={() =>
-              isTouchDevice
-                ? scrollToIndex(Math.max(0, activeIndex - 1))
-                : scrollByPage("prev")
-            }
-            className={`${btnClass(
-              !canScrollPrev
-            )} hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 z-20`}
+            onClick={prev}
+            className={`${btnClass(false)} hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 z-20`}
             type="button"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-              <path
-                d="M15 18L9 12L15 6"
-                stroke="currentColor"
-                strokeWidth="2.2"
-                strokeLinecap="round"
-              />
+              <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
             </svg>
           </button>
 
-          {/* Cards Track */}
-          <motion.div
-            variants={container}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, amount: 0.15 }}
-            ref={trackRef}
-            className={`${
-              isTouchDevice
-                ? "flex overflow-x-auto snap-x snap-mandatory -mx-4 py-6 scrollbar-hide"
-                : "grid gap-6 sm:gap-8 md:gap-10 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
-            }`}
-          >
-            {cards.map((card, i) => {
-              const active = i === activeIndex;
-
-              return (
+          {/* VIEWPORT */}
+          <div className="overflow-hidden w-full max-w-full">
+            <motion.div
+              className="flex items-start gap-6"
+              animate={{ x: `${translateXPercent}%` }}
+              transition={{ duration: 0.55, ease: "easeInOut" }}
+              style={{ width: `${containerWidthPercent}%` }}
+              role="list"
+              aria-live="polite"
+            >
+              {loopList.map((card, i) => (
                 <motion.div
                   key={i}
-                  ref={(el) => setItemRef(el, i)}
-                  variants={cardVariants}
-                  className={`relative flex flex-col justify-between rounded-xl border-2 border-amber-500 p-5 sm:p-6 bg-white/8 backdrop-blur-md shadow-md min-h-[250px] sm:min-h-[270px] lg:min-h-[260px] ${
-                    isTouchDevice
-                      ? "min-w-[82%] snap-center mx-4"
-                      : ""
-                  }`}
-                  style={{
-                    transform: isTouchDevice
-                      ? active
-                        ? "scale(1.02)"
-                        : "scale(0.95)"
-                      : undefined,
-                    transition: "transform 240ms ease",
-                    zIndex: active ? 20 : 10,
-                  }}
+                  variants={cardVariants}  // 🔥 Individual card animations on scroll
+                  className="flex flex-col justify-between rounded-xl border-2 border-amber-500 p-5 sm:p-6 bg-white/8 backdrop-blur-md shadow-md min-h-[250px] sm:min-h-[270px] lg:min-h-[260px] flex-shrink-0"
+                  style={{ width: `${100 / loopList.length}%`, zIndex: i % total === index ? 20 : 10 }}
+                  role="listitem"
                 >
-                  <button
-                    aria-label="fav"
-                    className="absolute top-3 right-3 text-amber-400 text-xl"
-                  >
+                  <button aria-label="fav" className="absolute top-3 right-3 text-amber-400 text-xl">
                     ♡
                   </button>
 
                   <div className="flex justify-center mb-3">
                     <div className="w-[60%] sm:w-40 md:w-44 lg:w-48 aspect-[4/3] flex items-center justify-center">
                       <img
-                        src={
-                          typeof card.icon === "string"
-                            ? card.icon
-                            : (card.icon as any).src ?? card.icon
-                        }
+                        src={typeof card.icon === "string" ? card.icon : (card.icon as any).src ?? card.icon}
                         alt={card.title}
                         className="object-contain w-full h-full drop-shadow-md"
                       />
@@ -319,43 +211,30 @@ const Nuestros: React.FC = () => {
                     </button>
                   </div>
                 </motion.div>
-              );
-            })}
-          </motion.div>
+              ))}
+            </motion.div>
+          </div>
 
-          {/* Next Button — hidden on mobile */}
+          {/* Next */}
           <button
             aria-label="Next"
-            onClick={() =>
-              isTouchDevice
-                ? scrollToIndex(Math.min(cards.length - 1, activeIndex + 1))
-                : scrollByPage("next")
-            }
-            className={`${btnClass(
-              !canScrollNext
-            )} hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 z-20`}
+            onClick={next}
+            className={`${btnClass(false)} hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 z-20`}
             type="button"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-              <path
-                d="M9 18L15 12L9 6"
-                stroke="currentColor"
-                strokeWidth="2.2"
-                strokeLinecap="round"
-              />
+              <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
             </svg>
           </button>
         </div>
 
-        {/* Dots — VISIBLE ONLY ON MOBILE */}
+        {/* Dots */}
         <div className="mt-6 flex justify-center gap-2 md:hidden">
           {cards.map((_, i) => (
             <button
               key={i}
-              onClick={() => scrollToIndex(i)}
-              className={`w-3 h-3 rounded-full transition ${
-                activeIndex === i ? "bg-amber-400 scale-125" : "bg-white/30"
-              }`}
+              onClick={() => goTo(i)}
+              className={`w-3 h-3 rounded-full transition ${i === index ? "bg-amber-400 scale-125" : "bg-white/30"}`}
               aria-label={`Go to slide ${i + 1}`}
             />
           ))}

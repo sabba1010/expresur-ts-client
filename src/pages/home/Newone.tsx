@@ -11,9 +11,9 @@ const Newone = () => {
     >
       {/* ORANGE CARD */}
       <motion.div
-        initial={{ opacity: 0, y: 100 }}
+        initial={{ opacity: 0, y: 120 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-150px" }}
+        viewport={{ once: true, amount: 0.2 }}
         transition={{ duration: 1.1, ease: "easeOut" }}
         className="
           relative bg-[#F7941E] rounded-2xl shadow-2xl 
@@ -23,13 +23,19 @@ const Newone = () => {
         "
       >
         {/* LEFT TEXT AREA */}
-        <div className="md:w-[60%] w-full md:pr-24 space-y-6 z-10 text-center md:text-left">
+        <motion.div
+          initial={{ opacity: 0, x: -90 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 1.0, ease: "easeOut" }}
+          className="md:w-[60%] w-full md:pr-24 space-y-6 z-10 text-center md:text-left"
+        >
           {/* TITLE */}
           <motion.h1
-            initial={{ opacity: 0, x: -80 }}
+            initial={{ opacity: 0, x: -60 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.9, delay: 0.3 }}
+            transition={{ duration: 0.9, delay: 0.15, ease: "easeOut" }}
             className="
               text-white font-bold uppercase 
               md:text-[80px] md:leading-[96px] md:tracking-[4.96px]
@@ -39,11 +45,12 @@ const Newone = () => {
             TIENDA ONLINE
           </motion.h1>
 
+          {/* PARAGRAPH */}
           <motion.p
-            initial={{ opacity: 0, x: -60 }}
+            initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.9, delay: 0.5 }}
+            transition={{ duration: 0.9, delay: 0.25, ease: "easeOut" }}
             className="
               text-white md:max-w-xl 
               text-[15px] md:text-[17px] 
@@ -60,14 +67,14 @@ const Newone = () => {
 
           {/* BUTTON */}
           <motion.button
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.7 }}
+            transition={{ duration: 0.8, delay: 0.35, ease: "easeOut" }}
             whileHover={{
               scale: 1.08,
               backgroundColor: "#045f3a",
-              boxShadow: "0 15px 35px rgba(0,0,0,0.3)",
+              boxShadow: "0 15px 35px rgba(0,0,0,0.3)"
             }}
             whileTap={{ scale: 0.95 }}
             className="
@@ -80,14 +87,14 @@ const Newone = () => {
           >
             VISITA NUESTRA TIENDA
           </motion.button>
-        </div>
+        </motion.div>
 
         {/* TRUCK IMAGE */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1.2, delay: 0.6, ease: "easeOut" }}
+          initial={{ opacity: 0, scale: 0.75, x: 60 }}
+          whileInView={{ opacity: 1, scale: 1, x: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 1.2, delay: 0.3, ease: "easeOut" }}
           className="md:absolute md:-right-4 md:-bottom-4 mt-10 md:mt-0"
         >
           <img

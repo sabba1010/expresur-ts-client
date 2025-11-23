@@ -7,21 +7,29 @@ const containerVariants: Variants = {
     opacity: 1,
     transition: {
       staggerChildren: 0.15,
-      delayChildren: 0.3,
+      delayChildren: 0.2,
     },
   },
 };
 
-const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 40 },
+const itemLeftVariants: Variants = {
+  hidden: { opacity: 0, y: 40, x: -30 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: {
-      duration: 0.8,
-      ease: "easeOut",
-    },
-  },
+    x: 0,
+    transition: { duration: 0.9, ease: "easeOut" },
+  }
+};
+
+const itemRightVariants: Variants = {
+  hidden: { opacity: 0, y: 40, x: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    x: 0,
+    transition: { duration: 0.9, ease: "easeOut" },
+  }
 };
 
 const titleVariants: Variants = {
@@ -52,7 +60,7 @@ const FAQ: React.FC = () => {
       <motion.div
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
+        viewport={{ once: true, amount: 0.2 }}
         variants={containerVariants}
         className="mt-10 md:mt-[135px]"
       >
@@ -80,8 +88,13 @@ const FAQ: React.FC = () => {
           Preguntas Frecuentes (FAQ)
         </motion.h2>
 
-        {/* ⬇️ FIXED SEAM — ORANGE LINE, 643PX, NO DOTS */}
-        <motion.div className="flex justify-center mt-6 md:mt-8 mb-10 md:mb-16">
+        {/* ORANGE LINE */}
+        <motion.div
+          initial={{ opacity: 0, scaleX: 0 }}
+          whileInView={{ opacity: 1, scaleX: 1 }}
+          transition={{ duration: 0.9, ease: "easeOut" }}
+          className="flex justify-center mt-6 md:mt-8 mb-10 md:mb-16 origin-center"
+        >
           <div
             className="
               bg-[#F5C65A]
@@ -93,15 +106,16 @@ const FAQ: React.FC = () => {
           />
         </motion.div>
 
-        {/* GRID CONTENT */}
+        {/* GRID */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-10 lg:gap-x-20 gap-y-12 md:gap-y-16">
+
           {/* LEFT COLUMN */}
           <div className="space-y-10 md:space-y-12">
             {[1, 2, 3].map((i) => (
               <motion.div
                 key={`left-${i}`}
-                variants={itemVariants}
-                transition={{ type: "spring", stiffness: 300 }}
+                variants={itemLeftVariants}
+                viewport={{ once: true, amount: 0.2 }}
               >
                 <h3
                   className="
@@ -126,7 +140,8 @@ const FAQ: React.FC = () => {
                 <motion.p
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
-                  transition={{ delay: 0.4, duration: 0.8 }}
+                  transition={{ delay: 0.3, duration: 0.8 }}
+                  viewport={{ once: true }}
                   className="
                     text-white
                     font-[Avenir_Next_LT_Pro]
@@ -142,8 +157,9 @@ const FAQ: React.FC = () => {
                     mt-3
                   "
                 >
-                  rápidos, económicos y seguros Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                  sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+                  rápidos, económicos y seguros Lorem ipsum dolor sit amet,
+                  consectetur adipiscing elit, sed diam nonummy nibh euismod
+                  tincidunt ut laoreet dolore magna aliquam erat volutpat.
                 </motion.p>
               </motion.div>
             ))}
@@ -154,8 +170,8 @@ const FAQ: React.FC = () => {
             {[1, 2, 3].map((i) => (
               <motion.div
                 key={`right-${i}`}
-                variants={itemVariants}
-                transition={{ type: "spring", stiffness: 300 }}
+                variants={itemRightVariants}
+                viewport={{ once: true, amount: 0.2 }}
               >
                 <h3
                   className="
@@ -180,7 +196,8 @@ const FAQ: React.FC = () => {
                 <motion.p
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
-                  transition={{ delay: 0.4, duration: 0.8 }}
+                  transition={{ delay: 0.3, duration: 0.8 }}
+                  viewport={{ once: true }}
                   className="
                     text-white
                     font-[Avenir_Next_LT_Pro]
@@ -196,8 +213,9 @@ const FAQ: React.FC = () => {
                     mt-3
                   "
                 >
-                  rápidos, económicos y seguros Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                  sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+                  rápidos, económicos y seguros Lorem ipsum dolor sit amet,
+                  consectetur adipiscing elit, sed diam nonummy nibh euismod
+                  tincidunt ut laoreet dolore magna aliquam erat volutpat.
                 </motion.p>
               </motion.div>
             ))}
@@ -206,20 +224,20 @@ const FAQ: React.FC = () => {
 
         {/* BUTTON */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8, duration: 0.8 }}
+          transition={{ duration: 0.9, ease: "easeOut" }}
+          viewport={{ once: true }}
           className="flex justify-center mt-16 md:mt-20"
         >
           <motion.button
             whileHover={{
               scale: 1.08,
               backgroundColor: "#FA921D",
-              borderColor: "#FA921D",
               color: "#fff",
             }}
-            whileTap={{ scale: 0.95 }}
-            transition={{ type: "spring", stiffness: 400 }}
+            whileTap={{ scale: 0.94 }}
+            transition={{ type: "spring", stiffness: 350 }}
             className="
               text-white
               font-[Avenir_Next_LT_Pro]
@@ -234,12 +252,9 @@ const FAQ: React.FC = () => {
               rounded-[24.5px]
               border-[2px]
               border-[#FA921D]
-              relative
-              overflow-hidden
-              transition-all duration-300
             "
           >
-            <span className="relative z-10">VER MÁS</span>
+            VER MÁS
           </motion.button>
         </motion.div>
       </motion.div>
