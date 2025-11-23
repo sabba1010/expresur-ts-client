@@ -1,82 +1,61 @@
-import React, { useState } from "react";
-import { motion } from "framer-motion";
+import React from "react";
 import icon from "../../assets/Grupo-icon.png";
 import timeline from "../../assets/Grupoline.png";
 
 const LogisticsTimeline: React.FC = () => {
-  const [pauseTop, setPauseTop] = useState(false);
-  const [pauseBottom, setPauseBottom] = useState(false);
-
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 60 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 1, ease: "easeOut" }}
-      className="w-full bg-[#026432] py-24 overflow-x-hidden flex justify-center"
+    <div
+      className="w-full bg-[#026432] py-20 overflow-x-hidden flex justify-center"
+      style={{ translate: "0" }}
     >
       <div className="relative w-full max-w-[2100px] px-4">
 
-        {/* 🔵 TOP ICON – AUTO LOOP */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.9, delay: 0.2 }}
-          className="w-full overflow-hidden mb-10"
-          onMouseEnter={() => setPauseTop(true)}
-          onMouseLeave={() => setPauseTop(false)}
-        >
+        {/* 🔵 TOP ICON – AUTO LOOP (never pause on hover) */}
+        <div className="w-full overflow-hidden mb-8">
           <div
             className="flex will-change-transform animate-scrollX"
-            style={{ animationPlayState: pauseTop ? "paused" : "running" }}
+            style={{ animationPlayState: "running", touchAction: "pan-y" }}
           >
             <img
               src={icon}
               alt="Icon Row"
-              className="min-w-[2000px] max-w-none h-auto object-contain select-none"
               draggable={false}
+              // responsive min-width values so images are smaller on phones
+              className="min-w-[600px] sm:min-w-[1000px] md:min-w-[1600px] lg:min-w-[2000px] max-w-none h-auto object-contain select-none"
             />
             <img
               src={icon}
               alt="Icon Row Duplicate"
-              className="min-w-[2000px] max-w-none h-auto object-contain select-none"
               draggable={false}
+              className="min-w-[600px] sm:min-w-[1000px] md:min-w-[1600px] lg:min-w-[2000px] max-w-none h-auto object-contain select-none"
             />
           </div>
-        </motion.div>
+        </div>
 
-        {/* 🟢 TIMELINE – AUTO LOOP */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1, delay: 0.4 }}
-          className="w-full overflow-hidden"
-          onMouseEnter={() => setPauseBottom(true)}
-          onMouseLeave={() => setPauseBottom(false)}
-        >
+        {/* 🟢 TIMELINE – AUTO LOOP (never pause on hover) */}
+        <div className="w-full overflow-hidden">
           <div
             className="flex will-change-transform animate-scrollX"
-            style={{ animationPlayState: pauseBottom ? "paused" : "running" }}
+            style={{ animationPlayState: "running", touchAction: "pan-y" }}
           >
             <img
               src={timeline}
               alt="Timeline"
-              className="min-w-[2500px] max-w-none h-auto object-contain select-none"
               draggable={false}
+              // timeline image made a bit wider but responsive on small screens
+              className="min-w-[800px] sm:min-w-[1400px] md:min-w-[2000px] lg:min-w-[2500px] max-w-none h-auto object-contain select-none"
             />
             <img
               src={timeline}
               alt="Timeline Duplicate"
-              className="min-w-[2500px] max-w-none h-auto object-contain select-none"
               draggable={false}
+              className="min-w-[800px] sm:min-w-[1400px] md:min-w-[2000px] lg:min-w-[2500px] max-w-none h-auto object-contain select-none"
             />
           </div>
-        </motion.div>
+        </div>
 
       </div>
-    </motion.div>
+    </div>
   );
 };
 

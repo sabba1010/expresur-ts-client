@@ -1,5 +1,4 @@
 import React from "react";
-import { motion } from "framer-motion";
 import car2 from "./../../assets/Grupo car2.png";
 import BgImg from "../../assets/Grupo-1567.png";
 
@@ -10,11 +9,7 @@ const Newone = () => {
       style={{ backgroundImage: `url(${BgImg})` }}
     >
       {/* ORANGE CARD */}
-      <motion.div
-        initial={{ opacity: 0, y: 120 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.2 }}
-        transition={{ duration: 1.1, ease: "easeOut" }}
+      <div
         className="
           relative bg-[#F7941E] rounded-2xl shadow-2xl 
           flex flex-col md:flex-row items-center 
@@ -23,19 +18,9 @@ const Newone = () => {
         "
       >
         {/* LEFT TEXT AREA */}
-        <motion.div
-          initial={{ opacity: 0, x: -90 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 1.0, ease: "easeOut" }}
-          className="md:w-[60%] w-full md:pr-24 space-y-6 z-10 text-center md:text-left"
-        >
+        <div className="md:w-[60%] w-full md:pr-24 space-y-6 z-10 text-center md:text-left">
           {/* TITLE */}
-          <motion.h1
-            initial={{ opacity: 0, x: -60 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.9, delay: 0.15, ease: "easeOut" }}
+          <h1
             className="
               text-white font-bold uppercase 
               md:text-[80px] md:leading-[96px] md:tracking-[4.96px]
@@ -43,14 +28,10 @@ const Newone = () => {
             "
           >
             TIENDA ONLINE
-          </motion.h1>
+          </h1>
 
           {/* PARAGRAPH */}
-          <motion.p
-            initial={{ opacity: 0, x: -40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.9, delay: 0.25, ease: "easeOut" }}
+          <p
             className="
               text-white md:max-w-xl 
               text-[15px] md:text-[17px] 
@@ -63,47 +44,32 @@ const Newone = () => {
             veniam, quis nostrud exerci tation ullamcorper suscipit lobortis
             nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure
             dolor in hendrerit.
-          </motion.p>
+          </p>
 
           {/* BUTTON */}
-          <motion.button
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.35, ease: "easeOut" }}
-            whileHover={{
-              scale: 1.08,
-              backgroundColor: "#045f3a",
-              boxShadow: "0 15px 35px rgba(0,0,0,0.3)"
-            }}
-            whileTap={{ scale: 0.95 }}
+          <button
             className="
               relative text-white 
               px-10 py-3 mx-auto md:mx-0
               bg-green-900 rounded-full font-semibold
               text-[15px] md:text-[18px]
               tracking-[1px]
+              hover:scale-105 hover:bg-[#045f3a] transition-transform duration-200
             "
           >
             VISITA NUESTRA TIENDA
-          </motion.button>
-        </motion.div>
+          </button>
+        </div>
 
         {/* TRUCK IMAGE */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.75, x: 60 }}
-          whileInView={{ opacity: 1, scale: 1, x: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 1.2, delay: 0.3, ease: "easeOut" }}
-          className="md:absolute md:-right-4 md:-bottom-4 mt-10 md:mt-0"
-        >
+        <div className="md:absolute md:-right-4 md:-bottom-4 mt-10 md:mt-0">
           <img
             src={car2}
             alt="Truck and boxes"
             className="w-[300px] md:w-[867px] h-auto drop-shadow-2xl mx-auto"
           />
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
     </div>
   );
 };

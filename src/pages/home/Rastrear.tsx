@@ -1,15 +1,10 @@
 import React from "react";
-import { motion } from "framer-motion";
 import rastrearImg from "../../assets/rastrear.png";
 
 const Rastrear = () => {
   return (
     <div className="w-full max-w-[1673px] xl:max-w-[1673px] mx-auto">
-      <motion.section
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, ease: "easeOut" }}
-        viewport={{ once: true, amount: 0.2 }}
+      <section
         className="
           w-full
           px-6 sm:px-8 md:px-12 xl:px-20
@@ -21,13 +16,7 @@ const Rastrear = () => {
         "
       >
         {/* LEFT CONTENT */}
-        <motion.div
-          initial={{ opacity: 0, x: -40 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.9, delay: 0.2 }}
-          viewport={{ once: true }}
-          className="order-2 md:order-1 flex flex-col justify-start -mt-2 xl:-mt-10"
-        >
+        <div className="order-2 md:order-1 flex flex-col justify-start -mt-2 xl:-mt-10">
           <h1 className="text-3xl sm:text-4xl md:text-5xl xl:text-6xl xl:text-7xl font-semibold text-orange-500 leading-tight">
             Rastrear paquete
           </h1>
@@ -88,16 +77,10 @@ const Rastrear = () => {
               RASTREAR
             </button>
           </form>
-        </motion.div>
+        </div>
 
         {/* RIGHT IMAGE */}
-        <motion.div
-          initial={{ opacity: 0, x: 40 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1, delay: 0.3 }}
-          viewport={{ once: true }}
-          className="order-1 md:order-2 flex justify-center md:justify-end"
-        >
+        <div className="order-1 md:order-2 flex justify-center md:justify-end">
           <img
             src={rastrearImg}
             alt="Rastrear paquete"
@@ -115,8 +98,8 @@ const Rastrear = () => {
               xl:-mt-[10%]
             "
           />
-        </motion.div>
-      </motion.section>
+        </div>
+      </section>
     </div>
   );
 };

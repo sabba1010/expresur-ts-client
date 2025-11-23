@@ -1,5 +1,4 @@
 import React from "react";
-import { motion } from "framer-motion";
 import HeroImg from "../../assets/Hero1.png";
 import HeroImg2 from "../../assets/Hero2.png";
 import HeroBg from "../../assets/HeroBg.png";
@@ -15,11 +14,7 @@ const HeroOne: React.FC = () => {
         backgroundSize: "cover",
       }}
     >
-      <motion.div
-        initial={{ opacity: 0, y: 60 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, ease: "easeOut" }}
-        viewport={{ once: true }}
+      <div
         className="mx-auto px-6"
         style={{
           backgroundImage: `url(${HeroImg2})`,
@@ -30,13 +25,7 @@ const HeroOne: React.FC = () => {
       >
         <div className="md:flex lg:gap-16 items-center md:pt-32 md:pl-20 pt-10">
           {/* LEFT */}
-          <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1, delay: 0.2 }}
-            viewport={{ once: true }}
-            className="text-white space-y-8 text-center lg:text-left md:w-1/2"
-          >
+          <div className="text-white space-y-8 text-center lg:text-left md:w-1/2">
             <h1 className="text-5xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold leading-tight tracking-tight">
               PROVEEDOR <br />
               DE SERVICIOS <br />
@@ -56,16 +45,10 @@ const HeroOne: React.FC = () => {
                 SOLICITAR COTIZACIÓN
               </button>
             </div>
-          </motion.div>
+          </div>
 
           {/* RIGHT IMAGE */}
-          <motion.div
-            initial={{ opacity: 0, x: 60 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1, delay: 0.3 }}
-            viewport={{ once: true }}
-            className="relative flex flex-col justify-center lg:justify-end w-full md:w-full lg:-mr-[50%] lg:-mb-[10%] md:-mr-[40%] md:-mb-[7%]"
-          >
+          <div className="relative flex flex-col justify-center lg:justify-end w-full md:w-full lg:-mr-[50%] lg:-mb-[10%] md:-mr-[40%] md:-mb-[7%]">
             <img
               src={HeroImg}
               alt="Servicios logísticos"
@@ -86,9 +69,9 @@ const HeroOne: React.FC = () => {
             >
               SOLICITAR COTIZACIÓN
             </button>
-          </motion.div>
+          </div>
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 };
