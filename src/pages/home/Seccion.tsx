@@ -1,11 +1,10 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import car from '../../assets/Grupo car.png';
+import React from "react";
+import { motion } from "framer-motion";
+import car from "../../assets/Grupo car.png";
 
-const Seccion = () => {
+const Seccion: React.FC = () => {
   return (
     <div className="w-full max-w-[1673px] min-h-[400px] md:min-h-[500px] lg:h-[662.87px] mx-auto px-4 sm:px-8 md:px-12 lg:px-20 -mb-8 md:-mb-16 lg:-mb-[135px] bg-[#F7941D] flex items-center justify-between rounded-2xl shadow-lg overflow-visible relative py-12 md:py-16 lg:py-0">
-
       {/* ---------------- DESKTOP IMAGE (original) ---------------- */}
       <motion.div
         initial={{ x: -300, opacity: 0 }}
@@ -42,14 +41,19 @@ const Seccion = () => {
           transition={{ duration: 0.7, delay: 0.7 }}
           className="font-[Avenir Next LT Pro] text-sm sm:text-base md:text-[17px] mb-6 md:mb-10 leading-relaxed"
         >
-          rápidos, económicos y seguros Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat.
+          rápidos, económicos y seguros Lorem ipsum dolor sit amet, consectetuer
+          adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet
+          dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis
+          nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex
+          ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in
+          vulputate velit esse molestie consequat.
         </motion.p>
 
         <motion.button
           whileHover={{
             scale: 1.05,
             boxShadow: "0 20px 30px -5px rgba(0, 0, 0, 0.35)",
-            backgroundColor: "#035228"
+            backgroundColor: "#035228",
           }}
           whileTap={{ scale: 0.98 }}
           initial={{ y: 30, opacity: 0 }}
@@ -67,13 +71,8 @@ const Seccion = () => {
           transition={{ duration: 0.8, delay: 1 }}
           className="block sm:hidden mt-8 flex justify-center"
         >
-          <img
-            src={car}
-            alt="Illustration"
-            className="w-[260px] h-auto object-contain"
-          />
+          <img src={car} alt="Illustration" className="w-[260px] h-auto object-contain" />
         </motion.div>
-
       </motion.div>
     </div>
   );

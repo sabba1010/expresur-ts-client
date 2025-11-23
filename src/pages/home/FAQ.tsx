@@ -1,40 +1,39 @@
-import React from 'react'
-import { motion } from 'framer-motion'
+import React from "react";
+import { motion, Variants } from "framer-motion";
 
-const FAQ = () => {
-  // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-        delayChildren: 0.3,
-      },
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.3,
     },
-  }
+  },
+};
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 40 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-        ease: "easeOut",
-      },
+const itemVariants: Variants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.8,
+      ease: "easeOut",
     },
-  }
+  },
+};
 
-  const titleVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 1, ease: "easeOut" },
-    },
-  }
+const titleVariants: Variants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 1, ease: "easeOut" },
+  },
+};
 
+const FAQ: React.FC = () => {
   return (
     <section
       className="
@@ -55,9 +54,8 @@ const FAQ = () => {
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
         variants={containerVariants}
-        className='mt-10 md:mt-[135px]'
+        className="mt-10 md:mt-[135px]"
       >
-
         {/* TITLE */}
         <motion.h2
           variants={titleVariants}
@@ -92,7 +90,7 @@ const FAQ = () => {
               border-t-[3px]
               border-[#F5C65A]
             "
-          ></div>
+          />
         </motion.div>
 
         {/* GRID CONTENT */}
@@ -101,7 +99,7 @@ const FAQ = () => {
           <div className="space-y-10 md:space-y-12">
             {[1, 2, 3].map((i) => (
               <motion.div
-                key={i}
+                key={`left-${i}`}
                 variants={itemVariants}
                 transition={{ type: "spring", stiffness: 300 }}
               >
@@ -155,7 +153,7 @@ const FAQ = () => {
           <div className="space-y-10 md:space-y-12">
             {[1, 2, 3].map((i) => (
               <motion.div
-                key={i}
+                key={`right-${i}`}
                 variants={itemVariants}
                 transition={{ type: "spring", stiffness: 300 }}
               >
@@ -244,10 +242,9 @@ const FAQ = () => {
             <span className="relative z-10">VER MÁS</span>
           </motion.button>
         </motion.div>
-
       </motion.div>
     </section>
-  )
-}
+  );
+};
 
-export default FAQ
+export default FAQ;
