@@ -56,7 +56,7 @@ const TeamSection: React.FC = () => {
       
       {/* LEFT SIDE */}
       <div className="max-w-lg mb-12 lg:mb-0">
-        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-orange-500 leading-tight mb-8">
+        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-normal text-[#fa921dff] leading-tight mb-8">
           Conoce a nuestro equipo de expertos 
           que impulsa el éxito de tu logística.
         </h2>
