@@ -18,19 +18,20 @@ const QuienesSomosBanner: React.FC = () => {
             </h1>
           </div>
           <div className="block md:hidden">
-            <h1 className="py-20 pl-5 text-3xl font-bold text-white uppercase">
+            <h1 className="py-20 pl-10 text-5xl font-bold text-white uppercase">
               Quiénes <br /> Somos
             </h1>
           </div>
+
           <img
             src={QuienesSomosImg}
             alt=""
-            className="absolute top-0 right-0"
+            className="absolute top-0 lg:right-0 right-[-100px] overflow-hidden"
           />
         </div>
       </div>
 
-      <div className="mt-[-40px]">
+      <div className="mt-[-55px] md:mt-[-40px]">
         <div className="bg-[#046838] max-w-[1500px] mx-auto rounded-3xl p-6 md:p-12 shadow-2xl">
           <div className="grid md:grid-cols-2 gap-8 md:gap-16 lg:gap-24 items-start relative">
             <div
@@ -39,7 +40,7 @@ const QuienesSomosBanner: React.FC = () => {
             ></div>
             <div className="text-white md:pr-4 relative z-10 text-center md:text-left">
               {" "}
-              <p className="text-2xl sm:text-3xl lg:text-4xl leading-tight pt-12 md:pt-0 mb-6">
+              <p className="text-2xl sm:text-3xl lg:text-4xl leading-tight pt-6 md:pt-0 mb-6">
                 Nos especializamos en ofrecer soluciones innovadoras de
                 logística.
               </p>
@@ -48,7 +49,6 @@ const QuienesSomosBanner: React.FC = () => {
                 clientes.
               </p>
             </div>{" "}
-
             <hr className="md:hidden border border-[#fa921d] w-[200px] mx-auto" />
             <div className="text-white text-base lg:text-lg space-y-4 md:pl-4 relative text-center md:text-left z-10">
               {" "}
