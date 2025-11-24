@@ -153,10 +153,9 @@ const Quedicen: React.FC = () => {
   }, [visibleCount, innerSlides]);
 
   return (
-    <div className="w-full h-[1000px] bg-[#026432] overflow-hidden py-10">
+    <div className="w-full bg-[#026432] overflow-hidden py-10">
      
-
-
+    
 
       <h2
         className="
