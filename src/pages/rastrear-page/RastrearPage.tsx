@@ -14,7 +14,7 @@ const RastrearPage: React.FC = () => {
 
   return (
     // Outer Container: Full width, using your custom horizontal gradient
-    <div className="bg-gradient-to-r from-[#4b722d] to-[#e68b19]">
+    <div className="bg-gradient-to-r from-[#4b722d] to-[#e68b19] min-h-[70vh]">
       {/* Centered Content Area: Max width set to 1400px */}
       <div className="max-w-[1280px] mx-auto py-10 md:py-20 px-4">
         <div className="flex">
