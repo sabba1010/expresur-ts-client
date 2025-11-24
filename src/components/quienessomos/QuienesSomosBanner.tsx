@@ -28,7 +28,7 @@ const QuienesSomosBanner: React.FC = () => {
           <img
             src={QuienesSomosImg}
             alt=""
-            className="absolute top-[-5px] lg:right-0 right-[-100px] pointer-events-none "
+            className="absolute top-1 lg:top-[-5px] lg:right-0 right-[-100px] pointer-events-none "
           />
         </div>
       </div>
