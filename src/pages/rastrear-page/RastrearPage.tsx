@@ -14,11 +14,11 @@ const RastrearPage: React.FC = () => {
 
   return (
     // Outer Container: Full width, using your custom horizontal gradient
-    <div className="bg-gradient-to-r from-[#4b722d] to-[#e68b19] min-h-screen">
+    <div className="bg-gradient-to-r from-[#4b722d] to-[#e68b19]">
       {/* Centered Content Area: Max width set to 1400px */}
       <div className="max-w-[1400px] mx-auto py-10 md:py-20 px-4">
         {/* Title Block (Always at the very top on all devices) */}
-        <div className="text-center md:text-left">
+        <div className="text-center md:text-left pb-20 md:pb-0">
           <h1
             className="text-5xl md:text-[55px] text-white leading-tight"
             style={{
@@ -32,7 +32,7 @@ const RastrearPage: React.FC = () => {
         </div>
 
         {/* Main Content Grid: Inputs/Image/Button */}
-        <div className="grid md:grid-cols-2 gap-10 items-center">
+        <div className="grid md:grid-cols-2 gap-10 items-center justify-center">
           {/* Left Side (Column 1): Inputs and Button */}
           <div className="md:pr-10">
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -43,9 +43,8 @@ const RastrearPage: React.FC = () => {
                 value={trackingNumber}
                 onChange={(e) => setTrackingNumber(e.target.value)}
                 className="
-                        w-full p-4 rounded-full border-2 border-white/50 
+                        w-full p-2 pl-6 rounded-full border-2 border-[#e68b19] 
                         text-gray-800 placeholder-gray-500 text-lg shadow-md
-                        focus:ring-4 focus:ring-green-400 focus:border-green-400
                         transition duration-300
                     "
                 required
@@ -58,9 +57,8 @@ const RastrearPage: React.FC = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="
-                        w-full p-4 rounded-full border-2 border-white/50 
-                        text-gray-800 placeholder-gray-500 text-lg shadow-md
-                        focus:ring-4 focus:ring-green-400 focus:border-green-400
+                        w-full p-2 pl-6 rounded-full border-2 border-[#e68b19] 
+                        text-gray-800 placeholder-gray-500 text-lg shadow-m
                         transition duration-300
                     "
               />
@@ -71,7 +69,7 @@ const RastrearPage: React.FC = () => {
                 type="submit"
                 className="
                         hidden md:block 
-                        w-full md:w-auto py-3 px-10 mt-6 rounded-xl text-xl font-bold uppercase 
+                        w-full md:w-auto py-3 px-10 mt-6 rounded-full text-xl font-bold uppercase 
                         bg-green-800 hover:bg-green-900 text-white shadow-xl 
                         transition duration-300 ease-in-out transform hover:scale-[1.01]
                     "
