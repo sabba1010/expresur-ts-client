@@ -4,14 +4,14 @@ import HeroBg from "../../assets/HeroBg.png";
 
 const QuienesSomosBanner: React.FC = () => {
   return (
-    <div>
+
+    <div className="overflow-x-hidden">
       <div
         style={{
           backgroundImage: `url(${HeroBg})`,
           backgroundPosition: "bottom",
         }}
       >
-        {/* Added overflow-x-hidden here */}
         <div className="relative w-full overflow-x-hidden">
           <div className="hidden md:block">
             <h1 className="py-52 md:pl-52 text-9xl text-white uppercase">
@@ -28,7 +28,7 @@ const QuienesSomosBanner: React.FC = () => {
           <img
             src={QuienesSomosImg}
             alt=""
-            className="absolute top-0 lg:right-0 right-[-100px] overflow-hidden"
+            className="absolute top-[-5px] lg:right-0 right-[-100px] pointer-events-none "
           />
         </div>
       </div>
@@ -83,7 +83,14 @@ const QuienesSomosBanner: React.FC = () => {
           </div>
         </div>
       </div>
-    </div>
+      <style>{`
+        @media (min-width: 1024px) {
+          .overflow-x-hidden { overflow-x: hidden !important; }
+        }/* Hide horizontal scrollbar on desktop only */
+
+
+      `}</style>
+ </div>
   );
 };
 
