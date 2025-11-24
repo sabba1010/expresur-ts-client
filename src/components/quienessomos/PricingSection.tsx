@@ -18,8 +18,8 @@ const PricingSection: React.FC = () => {
         {/* TITLE */}
         <div className="text-center">
           <h1
-            className="font-avenir font-bold tracking-[2px] text-white"
-            style={{ fontSize: "58px" }}
+            className="font-avenir font-bold tracking-[2px] text-white md:text-5xl text-4xl"
+            
           >
             PRECIOS FLEXIBLES Y TRANSPARENTES
           </h1>
