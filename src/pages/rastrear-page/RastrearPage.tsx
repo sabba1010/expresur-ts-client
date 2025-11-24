@@ -23,9 +23,6 @@ const RastrearPage: React.FC = () => {
             <div className="text-center md:text-left pb-20 md:pb-8">
               <h1
                 className="text-5xl md:text-[55px] text-white leading-tight"
-                style={{
-                  textShadow: "0 2px 4px rgba(0,0,0,0.5)",
-                }}
               >
                 Package Tracking <br />
                 is Easy with <br />
