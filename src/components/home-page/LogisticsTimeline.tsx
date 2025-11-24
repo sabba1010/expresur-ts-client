@@ -8,12 +8,23 @@ const LogisticsTimeline: React.FC = () => {
       className="w-full bg-[#026432] py-20 overflow-x-hidden flex justify-center"
       style={{ translate: "0" }}
     >
+      {/* Responsive override: make scroll faster on small screens (mobile) */}
+      <style>{`
+        /* adjust breakpoint to your project's mobile breakpoint if needed */
+        @media (max-width: 640px) {
+          /* shorter duration = faster speed */
+          .mobile-faster {
+            animation-duration: 8s !important;
+          }
+        }
+      `}</style>
+
       <div className="relative w-full max-w-[2100px] px-4">
 
         {/* 🔵 TOP ICON – AUTO LOOP (never pause on hover) */}
         <div className="w-full overflow-hidden mb-8">
           <div
-            className="flex will-change-transform animate-scrollX"
+            className="flex will-change-transform animate-scrollX mobile-faster"
             style={{ animationPlayState: "running", touchAction: "pan-y" }}
           >
             <img
@@ -35,7 +46,7 @@ const LogisticsTimeline: React.FC = () => {
         {/* 🟢 TIMELINE – AUTO LOOP (never pause on hover) */}
         <div className="w-full overflow-hidden">
           <div
-            className="flex will-change-transform animate-scrollX"
+            className="flex will-change-transform animate-scrollX mobile-faster"
             style={{ animationPlayState: "running", touchAction: "pan-y" }}
           >
             <img
