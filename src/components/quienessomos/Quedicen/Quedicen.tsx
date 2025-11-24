@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import Avatar from "./../../../assets/medium-shot-smiley-woman-with-crossed-arms (1).png";
-
 interface Testimonial {
   text: string;
   name: string;
@@ -155,6 +154,10 @@ const Quedicen: React.FC = () => {
 
   return (
     <div className="w-full h-[1000px] bg-[#026432] overflow-hidden py-10">
+     
+
+
+
       <h2
         className="
           text-[rgba(243,243,243,1)] font-bold 
