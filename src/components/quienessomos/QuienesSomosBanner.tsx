@@ -5,7 +5,12 @@ import HeroBg from "../../assets/HeroBg.png";
 const QuienesSomosBanner: React.FC = () => {
   return (
     <div>
-      <div style={{ backgroundImage: `url(${HeroBg})` }}>
+      <div
+        style={{
+          backgroundImage: `url(${HeroBg})`,
+          backgroundPosition: "bottom",
+        }}
+      >
         <div className=" relative ">
           <div className="hidden md:block">
             <h1 className="py-52 md:pl-52 text-9xl text-white uppercase">
@@ -32,9 +37,9 @@ const QuienesSomosBanner: React.FC = () => {
               className="hidden md:block absolute left-1/2 -translate-x-1/2 h-full w-[2px] bg-orange-500"
               aria-hidden="true"
             ></div>
-            <div className="text-white md:pr-4 relative z-10">
+            <div className="text-white md:pr-4 relative z-10 text-center md:text-left">
               {" "}
-              <p className="text-2xl sm:text-3xl lg:text-4xl leading-tight mb-6">
+              <p className="text-2xl sm:text-3xl lg:text-4xl leading-tight pt-12 md:pt-0 mb-6">
                 Nos especializamos en ofrecer soluciones innovadoras de
                 logística.
               </p>
@@ -43,7 +48,9 @@ const QuienesSomosBanner: React.FC = () => {
                 clientes.
               </p>
             </div>{" "}
-            <div className="text-white text-base lg:text-lg space-y-4 md:pl-4 relative z-10">
+
+            <hr className="md:hidden border border-[#fa921d] w-[200px] mx-auto" />
+            <div className="text-white text-base lg:text-lg space-y-4 md:pl-4 relative text-center md:text-left z-10">
               {" "}
               <p>
                 La logística contrata a grandes profesionales de diversos
