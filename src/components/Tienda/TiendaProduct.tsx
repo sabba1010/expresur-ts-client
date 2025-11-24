@@ -132,16 +132,8 @@ export default function TiendaProduct() {
               <ChevronDown className="w-4 h-4" />
             </button>
 
-            <div className="flex items-center px-3 py-2 rounded-full border-2 border-emerald-600 text-emerald-800 text-sm bg-white">
-              <span className="text-sm">${priceRange}</span>
-            </div>
 
-            <button
-              onClick={resetFilters}
-              className="flex-none px-3 py-2 rounded-full border-2 border-orange-300 text-orange-600 text-sm bg-white"
-            >
-              Reset
-            </button>
+        
           </div>
 
           {/* DROPDOWNS (in-flow) */}
