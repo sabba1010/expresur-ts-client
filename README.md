@@ -1,6 +1,10 @@
+Live : https://warm-taffy-734910.netlify.app/qui%C3%A9nes-somos
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+
 
 ## Available Scripts
 
