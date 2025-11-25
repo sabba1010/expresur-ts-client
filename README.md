@@ -1,4 +1,4 @@
-Live : https://warm-taffy-734910.netlify.app/qui%C3%A9nes-somos
+Live : https://warm-taffy-734910.netlify.app/
 
 # Getting Started with Create React App
 
